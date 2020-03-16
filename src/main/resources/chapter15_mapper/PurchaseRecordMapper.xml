@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbootbase.chapter15.dao.PurchaseRecordDao">
+    <resultMap id="baseResultMap" type="purchaseRecord">
+        <result column="user_id" property="userId"  />
+        <result column="product_id" property="productId"  />
+        <result column="purchase_date" property="purchaseDate"  />
+    </resultMap>
+
+    <!-- 插入购买记录   -->
+    <insert id="insertPurchaseRecord" parameterType="purchaseRecord" >
+        insert into t_purchase_record(user_id,product_id,price,quantity,sum,note)
+        values(#{userId},#{productId},#{price},#{quantity},#{sum},#{note})
+    </insert>
+
+
+</mapper>

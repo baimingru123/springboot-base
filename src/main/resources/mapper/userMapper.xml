@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbootbase.chapter11_rest.dao.UserDao">
+    <resultMap id="userResultMap" type="com.example.springbootbase.chapter11_rest.pojo.User">
+        <result column="sex" property="sex"  typeHandler="com.example.springbootbase.chapter11_rest.handler.UniversalEnumHandler" />
+        <result column="user_name" property="userName" jdbcType="INTEGER"/>
+    </resultMap>
+
+<!--    <parameterMap id="userParamMap" type="com.example.springbootbase.chapter11_rest.pojo.User">-->
+<!--        <parameter property="sex" -->
+<!--    </parameterMap>-->
+    <select id="getUser" parameterType="long" resultMap="userResultMap">
+        select id,sex,user_name,note from t_user where id=#{id}
+    </select>
+
+    <insert id="insertUser" parameterType="user" useGeneratedKeys="true" keyProperty="id" >
+        insert into t_user(user_name,sex,note) value (#{userName},#{sex,jdbcType=INTEGER,typeHandler=com.example.springbootbase.chapter11_rest.handler.UniversalEnumHandler},#{note})
+    </insert>
+
+    <update id="updateUser">
+        update t_user
+        <set>
+            <if test="userName != null">
+                user_name=#{userName},
+            </if>
+            <if test="note != null">
+                note=#{note},
+            </if>
+            <if test="sex !=null">
+                sex=#{sex,jdbcType=INTEGER,typeHandler=com.example.springbootbase.chapter11_rest.handler.UniversalEnumHandler},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findUsers" resultType="user">
+        select id,user_name as userName,note from t_user
+        <where>
+            <if test="userName != null">
+                and user_name=#{userName}
+            </if>
+            <if test="note != null">
+                and note=#{note}
+            </if>
+        </where>
+    </select>
+
+    <select id="findUsersLimit" resultMap="userResultMap">
+        select id,sex,user_name,note from t_user
+        <where>
+            <if test="userName != null">
+                and user_name=#{userName}
+            </if>
+            <if test="note != null">
+                and note=#{note}
+            </if>
+            <if test="start !=null and limit !=null">
+                limit #{start},#{limit}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteUser" parameterType="long">
+        delete from t_user where id=#{id}
+    </delete>
+</mapper>
