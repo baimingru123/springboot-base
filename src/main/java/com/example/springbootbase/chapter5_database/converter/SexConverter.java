@@ -14,12 +14,12 @@ public class SexConverter implements AttributeConverter<SexEnum,Integer> {
     //将枚举转换为数据库列
     @Override
     public Integer convertToDatabaseColumn(SexEnum sexEnum) {
-        return sexEnum.getId();
+        return sexEnum.getCode();
     }
 
     //将数据库列转换为枚举
     @Override
     public SexEnum convertToEntityAttribute(Integer id) {
-        return SexEnum.getEnumById(id);
+        return SexEnum.getSexEnum(id);
     }
 }

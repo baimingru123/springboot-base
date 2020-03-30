@@ -4,9 +4,12 @@ import com.example.springbootbase.chapter11_rest.enums.SexEnum;
 import com.example.springbootbase.chapter11_rest.pojo.User;
 import com.example.springbootbase.chapter11_rest.service.UserService;
 import com.example.springbootbase.chapter11_rest.vo.UserVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,18 +21,21 @@ import java.util.Map;
  * @time 2020-02-29 16:20
  */
 @Controller
+@Api(value ="用户接口api" ,tags = "用户接口api相关controller")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/restful")
+//    @ApiIgnore
     public String index(){
         return "restful";
     }
 
     @PostMapping("/user")
     @ResponseBody
+    @ApiOperation(value = "获取用户列表",notes = "获取用户列表")
     public User insertUser(@RequestBody UserVo userVo){
         System.out.println("userVo:"+userVo);
         User user=this.changeToPo(userVo);

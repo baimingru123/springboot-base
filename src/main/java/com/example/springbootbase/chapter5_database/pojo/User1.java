@@ -11,7 +11,7 @@ import javax.persistence.*;
  * @time 2020-01-09 11:11
  */
 @Data
-@Alias("user")
+@Alias("user1")
 public class User1 {
 
 

@@ -24,27 +24,33 @@ public class SexTypeHandler extends BaseTypeHandler<SexEnum> {
     //设置非空性别参数
     @Override
     public void setNonNullParameter(PreparedStatement preparedStatement, int i, SexEnum sexEnum, JdbcType jdbcType) throws SQLException {
-        preparedStatement.setInt(i,sexEnum.getId());
+        preparedStatement.setInt(i,sexEnum.getCode());
     }
 
     //通过列名读取性别
     @Override
     public SexEnum getNullableResult(ResultSet resultSet, String s) throws SQLException {
         int sex= resultSet.getInt(s);
+        System.out.println("数据库中的sex："+sex);
         if(sex !=1 && sex !=2){
             return null;
         }
-        return SexEnum.getEnumById(sex);
+        SexEnum sexEnum=SexEnum.getSexEnum(sex);
+        System.out.println(sexEnum);
+        return sexEnum;
     }
 
     //通过下标读取性别
     @Override
     public SexEnum getNullableResult(ResultSet resultSet, int i) throws SQLException {
         int sex= resultSet.getInt(i);
+        System.out.println("数据库中的sex："+sex);
         if(sex !=1 && sex !=2){
             return null;
         }
-        return SexEnum.getEnumById(sex);
+        SexEnum sexEnum=SexEnum.getSexEnum(sex);
+        System.out.println("查询出来的对象："+sexEnum);
+        return sexEnum;
     }
 
     //通过存储过程读取性别
@@ -54,6 +60,6 @@ public class SexTypeHandler extends BaseTypeHandler<SexEnum> {
         if(sex !=1 && sex !=2){
             return null;
         }
-        return SexEnum.getEnumById(sex);
+        return SexEnum.getSexEnum(sex);
     }
 }

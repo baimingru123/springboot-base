@@ -1,45 +1,41 @@
 package com.example.springbootbase.chapter5_database.enumeration;
 
+import lombok.Getter;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author bmr
- * @time 2020-01-09 11:12
+ * @time 2020-02-29 16:17
  */
-public enum  SexEnum {
+@Getter
+public enum SexEnum implements BaseEnum<SexEnum,Integer> {
     MALE(1,"男"),
     FEMALE(2,"女")
     ;
 
-    private int id;
+    private Integer code;
     private String name;
 
-    SexEnum(int id, String name) {
-        this.id = id;
+    static Map<Integer, SexEnum> enumMap=new HashMap<>();
+    static {
+        for (SexEnum sexEnum: SexEnum.values()){
+            enumMap.put(sexEnum.getCode(),sexEnum);
+        }
+    }
+
+    SexEnum(Integer code, String name) {
+        this.code = code;
         this.name = name;
     }
 
-    public static SexEnum getEnumById(int id){
-        for(SexEnum sex:SexEnum.values()){
-            if(sex.getId() == id){
-                return sex;
+    public static SexEnum getSexEnum(Integer code){
+        for(SexEnum sexEnum: SexEnum.values()){
+            if(code.equals(sexEnum.code)){
+               return sexEnum;
             }
         }
-
         return null;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
